@@ -1,0 +1,32 @@
+from datetime import datetime 
+import googlemaps
+import polyline
+
+
+start_time = datetime(2022,3,24,21,15,0) 
+gmaps = googlemaps.Client(key="") # please update this by your key, 
+#sign up for free $300 in 90 days from : https://developers.google.com/maps/documentation/javascript/get-api-key
+
+#doc:https://developers.google.com/maps/documentation/directions/get-directions
+
+#set up your choice
+origin='HKU'
+destin='HKUST'
+transit_mode_choose='train'
+transit_routing_preference='less_walking'
+
+
+parameters = {
+        "units": "metric",
+        "origin": origin,
+        "destination": destin,
+        "mode": "transit", 
+        "transit_mode": transit_mode_choose,
+        "transit_routing_preference": transit_routing_preference,
+        "departure_time": int(datetime.timestamp(start_time)),
+    }
+
+response = gmaps.directions(**parameters)
+resp = response[0]
+
+poly = resp["legs"]
